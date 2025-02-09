@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tranaction Management</title>
+
+
+    <style>
+        body {
+          font-family: sans-serif;
+          margin: 0;
+          display: flex;
+          min-height: 100vh;
+        }
+  
+        .main-container {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+        }
+  
+        .sidebar {
+          width: 250px;
+          background-color: #333;
+          color: white;
+          padding: 20px;
+          box-shadow: 5px 0 5px rgba(0, 0, 0, 0.3);
+          height: 100vh;
+          overflow-y: auto;
+          position: fixed;
+          transition: width 0.3s ease;
+        }
+  
+        .sidebar.open {
+          width: 250px; /* Sidebar visible */
+        }
+  
+        .sidebar h1 {
+          color: white;
+          margin-bottom: 30px;
+          text-align: center;
+        }
+  
+        .sidebar p {
+          cursor: pointer;
+          padding: 10px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+          transition: background-color 0.3s;
+        }
+  
+        .sidebar p:hover {
+          background-color: #555;
+        }
+  
+        .content {
+          margin-left: 20%;
+          padding: 20px;
+          flex-grow: 1;
+          transition: margin-left 0.3s ease;
+        }
+  
+        .content.open {
+          margin-left: 0; /* Shift content when sidebar is open */
+        }
+  
+        .loan-req-form {
+          display: flex;
+          flex-direction: column;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 90%;
+        }
+  
+        .loan-req-form .form-row {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 15px;
+          gap: 10px;
+        }
+  
+        .loan-req-form .form-row > div {
+          flex: 1;
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+        }
+  
+        .loan-req-form label {
+          margin-bottom: 5px;
+          font-weight: bold;
+          font-size: 14px;
+        }
+  
+        .loan-req-form input[type="text"],
+        .loan-req-form input[type="email"],
+        .loan-req-form input[type="tel"],
+        .loan-req-form input[type="number"],
+        .loan-req-form select {
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+          padding: 8px;
+          box-sizing: border-box;
+        }
+  
+        .loan-req-form select {
+          appearance: none;
+          background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+          background-repeat: no-repeat;
+          background-position-x: 100%;
+          background-position-y: 50%;
+          padding-right: 25px;
+          cursor: pointer;
+        }
+  
+        form input {
+          flex: 1;
+          padding: 10px;
+          font-size: var(--font-size-base);
+          border: 1px solid #ddd;
+          border-radius: var(--border-radius);
+          margin-top: 5px;
+        }
+  
+        form input:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+  
+        form input[type="submit"] {
+          background-color: #007bff;
+          color: white;
+          cursor: pointer;
+          border: none;
+          transition: background-color 0.3s ease;
+          border-radius: 4px;
+          padding: 12px;
+        }
+  
+        form input[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+  
+        .record-table table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+          border: 1px solid #ddd;
+          font-family: sans-serif;
+          overflow-x: auto;
+          display: block;
+        }
+  
+        .record-table th,
+        .record-table td {
+          padding: 10px;
+          border: 1px solid #ddd;
+          text-align: left;
+        }
+  
+        .record-table th {
+          background-color: #007bff;
+          color: white;
+          font-weight: bold;
+        }
+  
+        .record-table tr:hover {
+          background-color: #f0f0f0;
+        }
+  
+        .toggle-btn {
+          display: none;
+          font-size: 24px;
+          background-color: #333;
+          color: white;
+          border: none;
+          padding: 10px;
+          cursor: pointer;
+          margin-top: 10px;
+          position: absolute;
+          left: 20px;
+          top: 20px;
+        }
+  
+        /* Mobile and Tablet View */
+        @media (max-width: 1200px) {
+          .toggle-btn {
+            display: inline;
+          }
+  
+          .sidebar {
+            width: 18%;
+            transition: left 0.3s ease;
+          }
+  
+          .content {
+            margin-left: 0;
+          }
+  
+          .loan-req-form .form-row {
+            flex-direction: column;
+          }
+  
+          .record-table table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+          }
+  
+          .record-table th,
+          .record-table td {
+            width: auto;
+            padding: 10px;
+          }
+        }
+  
+        @media (max-width: 768px) {
+          .sidebar {
+            width: 0; /* Sidebar hidden */
+            transition: left 0.3s ease;
+          }
+  
+          .sidebar.open {
+            width: 100%; /* Sidebar visible */
+          }
+  
+          .sidebar p,
+          .sidebar h1 {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+          }
+  
+          .sidebar.open p,
+          .sidebar.open h1 {
+            visibility: visible;
+            opacity: 1;
+          }
+  
+          .content {
+            margin-left: 8%;
+            flex-grow: 1;
+            padding: 20px;
+          }
+  
+          .loan-req-form .form-row {
+            flex-direction: column;
+          }
+  
+          .record-table table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+          }
+  
+          .record-table th,
+          .record-table td {
+            width: auto;
+            padding: 10px;
+          }
+        }
+  
+        a {
+          text-decoration: none;
+          color: white;
+        }
+      </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h1>Transaction Management</h1>
+            <a href="./MyProfile.html"><p>Dashboard</p></a>
+            <a href="./Customer.html"><p>Customer Management</p></a>
+            <a href="./Loan.html"><p>Loan Management</p></a>
+            <a href="./Transaction.html"><p>Transaction Management</p></a>
+        </div>
+        
+
+        <div class="content">
+            
+
+            <div class="record-table">
+               <table>
+                    <tr>
+                        <th>Transaction Id</th>
+                        <th>Customer SSN ID</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Amount of Transaction</th>
+                        <th>Mode of Transaction</th>
+                        <th>Credit / Debit</th>
+                    </tr>
+
+                    <tr>
+                        <td>T12345</td>
+                        <td>E12345</td>
+                        <td>Rahul</td>
+                        <td>Abc xyz</td>
+                        <td>4500.00</td>
+                        <td>Online</td>
+                        <td>Credit</td>
+                    </tr>
+
+                    <tr>
+                        <td>T12341</td>
+                        <td>E3245</td>
+                        <td>Akshay</td>
+                        <td>Thane</td>
+                        <td>1300.00</td>
+                        <td>Online</td>
+                        <td>Debit</td>
+                    </tr>
+
+                    <tr>
+                        <td>T42345</td>
+                        <td>E9345</td>
+                        <td>Amir</td>
+                        <td>Pune</td>
+                        <td>11500.00</td>
+                        <td>Online</td>
+                        <td>Credit</td>
+                    </tr>
+                </table>
+            </div>
+
+            
+            
+        </div>
+
+
+        <!-- Toggle button -->
+        <button class="toggle-btn" id="toggle-btn">☰</button>
+
+    </div>
+    
+
+
+    <script>
+        const toggleButton = document.querySelector('.toggle-btn');
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+  
+        toggleButton.addEventListener('click', () => {
+          sidebar.classList.toggle('open');
+          content.classList.toggle('open');
+        });
+      </script>
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+180607, Rahul Varma,12.12.22,Savings,30000
+180608, Sita Raman,12.12.22,Joint,50000
+190607, Sheetal Patil,20.07.22,Current,40000
+190617, Pooja Patil,04.08.22,Salary,70000
+200607, Rahul Sharma,20.08.22,SAVINGS,20000
+210617, Pooja Srikari,20.08.22,SALARY,25000
+210607, Pooja Rewa,20.08.22,joint,35000
+210527, Dan Stewart,04.08.22,current,35000
+280707, Sia R,21.09.23,Savings,30000
+220888, Sonali G,1.05.23,Savings,15000

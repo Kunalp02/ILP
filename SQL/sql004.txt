@@ -1,0 +1,25 @@
+CREATE TABLE Transaction (
+    Transaction_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Customer_ID INT,
+    Customer_Name VARCHAR(100),
+    Account_Number VARCHAR(20),
+    IFSC_Code VARCHAR(11),
+    Account_Balance DECIMAL(15, 2),
+    Adhara_Card_No VARCHAR(20),
+    Pan_Card_No VARCHAR(20),
+    Contact_Number CHAR(10),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(SSN_ID)
+);
+
+INSERT INTO Transaction (Customer_ID, Customer_Name, Account_Number, IFSC_Code, Account_Balance, Adhara_Card_No, Pan_Card_No, Contact_Number)
+VALUES
+(1001, 'Rahul Varma', '1234567890', 'IFSC001', 30000, 'AD1234567', 'PAN1234', '9876543210'),
+(1002, 'Sita Raman', '1234567891', 'IFSC002', 50000, 'AD1234568', 'PAN1235', '9876543211'),
+(1003, 'Sheetal Patil', '1234567892', 'IFSC003', 40000, 'AD1234569', 'PAN1236', '9876543212'),
+(1004, 'Pooja Patil', '1234567893', 'IFSC004', 70000, 'AD1234570', 'PAN1237', '9876543213'),
+(1005, 'Rahul Sharma', '1234567894', 'IFSC005', 20000, 'AD1234571', 'PAN1238', '9876543214'),
+(1006, 'Pooja Srikari', '1234567895', 'IFSC006', 25000, 'AD1234572', 'PAN1239', '9876543215'),
+(1007, 'Pooja Rewa', '1234567896', 'IFSC007', 35000, 'AD1234573', 'PAN1240', '9876543216'),
+(1008, 'Dan Stewart', '1234567897', 'IFSC008', 35000, 'AD1234574', 'PAN1241', '9876543217'),
+(1009, 'Sia R', '1234567898', 'IFSC009', 30000, 'AD1234575', 'PAN1242', '9876543218'),
+(1010, 'Sonali G', '1234567899', 'IFSC010', 15000, 'AD1234576', 'PAN1243', '9876543219');

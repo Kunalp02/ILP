@@ -1,0 +1,9 @@
+// Update Customer Personal Information (Address or Phone)
+
+UPDATE Customer
+SET Address = 'Updated Address', Contact_Number = '9876543210' 
+WHERE SSN_ID = 1001; 
+
+sSELECT SSN_ID, CONCAT(First_Name, ' ', Last_Name) AS Name, Email, Contact_Number, Address
+FROM Customer
+WHERE SSN_ID = 1001;  

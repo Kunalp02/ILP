@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boilerplate Page</title>
+  <link rel="stylesheet" href="RegLogin.css">
+</head>
+<body>
+
+    <div class="left-container">
+        <p>Image</p>
+    </div>
+
+    <div class="right-container">
+
+        <div class="toggle-container">
+            <label class="toggle">
+              <input type="radio" name="userType" value="Admin" checked>
+              <span class="slider">Admin</span>
+            </label>
+            <label class="toggle">
+              <input type="radio" name="userType" value="Customer">
+              <span class="slider">Customer</span>
+            </label>
+            <label class="toggle">
+              <input type="radio" name="userType" value="Employee">
+              <span class="slider">Employee</span>
+            </label>
+        </div>
+
+        <div class="form-container">
+            <input type="hidden" id="register-role" name="role">
+            <!-- Register Form -->
+            <form id="register-form">
+                <div>
+                    <input type="text" id="firstName" placeholder="First Name">
+                    <input type="text" id="lastName" placeholder="Last Name">
+                </div>
+                
+                <div>
+                    <input type="text" id="email" placeholder="Email">
+                    <input type="text" id="phone" placeholder="Phone number">
+                </div>
+                
+                <div>
+                    <input type="password" id="password" placeholder="Password">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                </div>
+                
+                <div>
+                    <input type="text" id="address" placeholder="Address">
+                </div>
+                <div>
+                    <input type="text" id="contact" placeholder="Contact">
+                </div>
+                
+
+                <div class="agreement">
+                    <label>
+                      <input type="checkbox" name="agree">
+                      I agree to the <a href="#">&nbsp;Terms and Conditions&nbsp;</a> and <a href="#">&nbsp;Privacy Policy</a>
+                    </label>
+                </div>
+
+                <input type="submit" value="Register">
+            </form>
+
+            <!-- Login Form -->
+            <form id="login-form" style="display:none;">
+                <input type="hidden" id="login-role" name="role">
+
+                <div>
+                    <input type="text" placeholder="Employee Id" id="employeeId">
+                </div>
+                <div>
+                    <input type="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Login">
+            </form>
+
+            <div class="form-toggle">
+                <button type="button" id="login-btn">Login</button>
+                <button type="button" id="register-btn" class="active">Register</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <div id="popup-modal" style="display: none;">
+        <div id="popup-content">
+          <p id="popup-message"></p>
+          <button id="close-popup">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between login and register forms
+        const registerForm = document.getElementById('register-form');
+        const loginForm = document.getElementById('login-form');
+
+        const registerBtn = document.getElementById('register-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const popupModal = document.getElementById('popup-modal');
+        const popupMessage = document.getElementById('popup-message');
+        const closePopup = document.getElementById('close-popup');
+
+
+        // Show Register Form
+        registerBtn.addEventListener('click', function() {
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+            registerBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+        });
+
+        // Show Login Form
+        loginBtn.addEventListener('click', function() {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            loginBtn.classList.add('active');
+            registerBtn.classList.remove('active');
+        });
+
+    // Handle Register Form Submission
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const selectedRole = getSelectedRole();
+        document.getElementById('register-role').value = selectedRole;
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+
+        // Mock SSN Generation
+        const ssn = `SSN-${Math.floor(Math.random() * 1000000)}`;
+
+        // Show Popup
+        popupMessage.innerHTML = `
+            Registration successful!<br>
+            Welcome, ${firstName} ${lastName}.<br>
+            Your role is <b>${selectedRole}</b>.<br>
+            Your Customer SSN ID is <b>${ssn}</b>.
+        `;
+        popupModal.style.display = 'flex';
+
+        // Here you can send the form data to the backend
+    });
+
+    // Handle Login Form Submission
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const selectedRole = getSelectedRole();
+        document.getElementById('login-role').value = selectedRole;
+
+        const employeeId = document.getElementById('employeeId').value;
+
+        // Show Popup
+        popupMessage.innerHTML = `
+            Login successful!<br>
+            Welcome back, Employee ID: <b>${employeeId}</b>.<br>
+            Your role is <b>${selectedRole}</b>.
+        `;
+        popupModal.style.display = 'flex';
+
+        alert("Employee login successful!");
+
+        window.location.href = "Customer.html"; // Replace with your target page
+
+
+
+        // Here you can send the form data to the backend
+    });
+
+    // Close Popup
+    closePopup.addEventListener('click', function() {
+      popupModal.style.display = 'none';
+    });
+
+
+    function getSelectedRole() {
+        const roleRadios = document.querySelectorAll('input[name="userType"]');
+        for (const role of roleRadios) {
+            if (role.checked) {
+                console.log(role.value);
+                return role.value;
+            }
+        }
+
+        return null;
+    }
+
+    </script>
+</body>
+</html>

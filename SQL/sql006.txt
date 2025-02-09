@@ -1,0 +1,11 @@
+// Check Updated Account Balance After Transaction Process
+
+UPDATE Transaction
+SET Account_Balance = 35000  
+WHERE Customer_ID = 1001; 
+
+-- Query to check the updated balance
+SELECT c.SSN_ID, CONCAT(c.First_Name, ' ', c.Last_Name) AS Name, c.Email, t.Account_Balance
+FROM Customer c
+JOIN Transaction t ON c.SSN_ID = t.Customer_ID
+WHERE c.SSN_ID = 1001;

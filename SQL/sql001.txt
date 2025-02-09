@@ -1,0 +1,22 @@
+CREATE TABLE Customer (
+    SSN_ID INT PRIMARY KEY,
+    First_Name VARCHAR(50),
+    Last_Name VARCHAR(50),
+    Email VARCHAR(100),
+    Date_Of_Birth DATE,
+    Address VARCHAR(100),
+    Contact_Number CHAR(10)
+);
+
+INSERT INTO Customer (SSN_ID, First_Name, Last_Name, Email, Date_Of_Birth, Address, Contact_Number)
+VALUES
+(1001, 'Rahul', 'Varma', 'rahul.varma@example.com', '1990-12-12', '123 Main St, City', '9876543210'),
+(1002, 'Sita', 'Raman', 'sita.raman@example.com', '1985-10-25', '456 Elm St, City', '9876543211'),
+(1003, 'Sheetal', 'Patil', 'sheetal.patil@example.com', '1992-07-20', '789 Oak St, City', '9876543212'),
+(1004, 'Pooja', 'Patil', 'pooja.patil@example.com', '1995-08-04', '101 Pine St, City', '9876543213'),
+(1005, 'Rahul', 'Sharma', 'rahul.sharma@example.com', '1988-06-20', '202 Maple St, City', '9876543214'),
+(1006, 'Pooja', 'Srikari', 'pooja.srikari@example.com', '1993-05-12', '303 Birch St, City', '9876543215'),
+(1007, 'Pooja', 'Rewa', 'pooja.rewa@example.com', '1991-04-25', '404 Cedar St, City', '9876543216'),
+(1008, 'Dan', 'Stewart', 'dan.stewart@example.com', '1989-11-15', '505 Pineapple St, City', '9876543217'),
+(1009, 'Sia', 'R', 'sia.r@example.com', '1998-09-21', '606 Banana St, City', '9876543218'),
+(1010, 'Sonali', 'G', 'sonali.g@example.com', '1995-01-05', '707 Grape St, City', '9876543219');

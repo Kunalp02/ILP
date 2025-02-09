@@ -1,0 +1,5 @@
+SELECT c.SSN_ID, CONCAT(c.First_Name, ' ', c.Last_Name) AS Customer_Name, t.Account_Number, t.IFSC_Code, t.Account_Balance, 
+       t.Adhara_Card_No, t.Pan_Card_No, c.Date_Of_Birth, c.Email, c.Address, c.Contact_Number
+FROM Customer c
+JOIN Customer_Transaction t ON c.SSN_ID = t.Customer_ID
+WHERE c.SSN_ID = 1001;  -- Replace with the required customer ID
