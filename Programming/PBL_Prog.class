@@ -1,0 +1,158 @@
+class Employee {
+    private static int idCounter = 1000000;
+    private final int employeeId;
+    private String name, email, password, address, contactNumber;
+
+    public Employee(String name, String email, String password, String address, String contactNumber) {
+        this.employeeId = ++idCounter;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.contactNumber = contactNumber;
+    }
+
+    public void display() {
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Address: " + address);
+        System.out.println("Contact Number: " + contactNumber);
+    }
+}
+
+class Customer {
+    private String ssn, name, email, address, contactNumber, aadhar, pan, accountNumber;
+
+    public Customer(String ssn, String name, String email, String address, String contactNumber, String aadhar, String pan, String accountNumber) {
+        this.ssn = ssn;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.contactNumber = contactNumber;
+        this.aadhar = aadhar;
+        this.pan = pan;
+        this.accountNumber = accountNumber;
+    }
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void display() {
+        System.out.println("Customer SSN: " + ssn);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Address: " + address);
+        System.out.println("Contact Number: " + contactNumber);
+        System.out.println("Aadhar: " + aadhar);
+        System.out.println("PAN: " + pan);
+        System.out.println("Account Number: " + accountNumber);
+    }
+}
+
+public class CustomerManagementSystem {
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final List<Customer> customers = new ArrayList<>();
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("1. Register Employee");
+            System.out.println("2. Register Customer");
+            System.out.println("3. View Customer by SSN");
+            System.out.println("4. Update Customer");
+            System.out.println("5. Delete Customer");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1 -> registerEmployee();
+                case 2 -> registerCustomer();
+                case 3 -> viewCustomer();
+                case 4 -> updateCustomer();
+                case 5 -> deleteCustomer();
+                case 6 -> System.exit(0);
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private static void registerEmployee() {
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+        System.out.print("Enter Address: ");
+        String address = scanner.nextLine();
+        System.out.print("Enter Contact Number: ");
+        String contact = scanner.nextLine();
+        Employee employee = new Employee(name, email, password, address, contact);
+        System.out.println("Employee Registration is successful");
+        employee.display();
+    }
+
+    private static void registerCustomer() {
+        System.out.print("Enter SSN: ");
+        String ssn = scanner.nextLine();
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter Address: ");
+        String address = scanner.nextLine();
+        System.out.print("Enter Contact Number: ");
+        String contact = scanner.nextLine();
+        System.out.print("Enter Aadhar Number: ");
+        String aadhar = scanner.nextLine();
+        System.out.print("Enter PAN Number: ");
+        String pan = scanner.nextLine();
+        System.out.print("Enter Account Number: ");
+        String accountNumber = scanner.nextLine();
+        customers.add(new Customer(ssn, name, email, address, contact, aadhar, pan, accountNumber));
+        System.out.println("Customer Registration is successful");
+    }
+
+    private static void viewCustomer() {
+        System.out.print("Enter SSN: ");
+        String ssn = scanner.nextLine();
+        for (Customer customer : customers) {
+            if (customer.getSsn().equals(ssn)) {
+                customer.display();
+                return;
+            }
+        }
+        System.out.println("Customer not found");
+    }
+
+    private static void updateCustomer() {
+        System.out.print("Enter SSN to update: ");
+        String ssn = scanner.nextLine();
+        for (Customer customer : customers) {
+            if (customer.getSsn().equals(ssn)) {
+                System.out.println("Updating details for: ");
+                customer.display();
+                registerCustomer();
+                customers.remove(customer);
+                System.out.println("Customer details updated successfully");
+                return;
+            }
+        }
+        System.out.println("Customer not found");
+    }
+
+    private static void deleteCustomer() {
+        System.out.print("Enter SSN to delete: ");
+        String ssn = scanner.nextLine();
+        for (Customer customer : customers) {
+            if (customer.getSsn().equals(ssn)) {
+                customers.remove(customer);
+                System.out.println("Customer deleted successfully");
+                return;
+            }
+        }
+        System.out.println("Customer not found");
+    }
+}
